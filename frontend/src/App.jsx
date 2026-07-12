@@ -18,6 +18,10 @@ import DashboardLayout from './components/layout/DashboardLayout';
 import VehicleList from './pages/vehicles/VehicleList';
 import VehicleForm from './pages/vehicles/VehicleForm';
 
+// Trip Module Pages
+import TripList from './pages/trips/TripList';
+import TripForm from './pages/trips/TripForm';
+
 function App() {
   return (
     <ThemeProvider>
@@ -55,8 +59,9 @@ function App() {
                 <Route path="/dashboard/drivers/new" element={<DriverForm />} />
                 <Route path="/dashboard/drivers/:id" element={<DriverForm />} />
 
-                {/* Future routes we will build in next chapters */}
-                <Route path="/dashboard/drivers" element={<div className="p-6">Driver Module (Next Chapter)</div>} />
+                {/* Trips Module */}
+                <Route path="/dashboard/trips" element={<TripList />} />
+                <Route path="/dashboard/trips/new" element={<TripForm />} />
 
               </Route>
             </Route>

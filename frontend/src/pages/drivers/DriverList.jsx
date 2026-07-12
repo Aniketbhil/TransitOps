@@ -69,7 +69,7 @@ export default function DriverList() {
         </div>
         <Link
           to="/dashboard/drivers/new"
-          className="flex items-center gap-2 bg-[#22C55E] hover:bg-[#16A34A] text-white px-4 py-2 rounded-[12px] transition-colors font-medium text-sm"
+          className="flex items-center gap-2 bg-[#22C55E] hover:bg-[#16A34A] text-white px-4 py-2 rounded-xl transition-colors font-medium text-sm"
         >
           <Plus size={16} />
           Add Driver
