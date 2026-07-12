@@ -6,6 +6,10 @@ import { ThemeProvider } from './context/ThemeContext';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 
+// Driver Module Pages
+import DriverList from './pages/drivers/DriverList';
+import DriverForm from './pages/drivers/DriverForm';
+
 // Route Guards & Layouts
 import ProtectedRoute from './routes/ProtectedRoute';
 import DashboardLayout from './components/layout/DashboardLayout';
@@ -45,6 +49,11 @@ function App() {
                 <Route path="/dashboard/fleet" element={<VehicleList />} />
                 <Route path="/dashboard/fleet/new" element={<VehicleForm />} />
                 <Route path="/dashboard/fleet/:id" element={<VehicleForm />} />
+
+                {/* Drivers Module */}
+                <Route path="/dashboard/drivers" element={<DriverList />} />
+                <Route path="/dashboard/drivers/new" element={<DriverForm />} />
+                <Route path="/dashboard/drivers/:id" element={<DriverForm />} />
 
                 {/* Future routes we will build in next chapters */}
                 <Route path="/dashboard/drivers" element={<div className="p-6">Driver Module (Next Chapter)</div>} />
