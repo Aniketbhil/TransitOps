@@ -50,7 +50,7 @@ export default function MaintenanceForm() {
       await maintenanceApi.create(payload);
       navigate('/dashboard/maintenance');
     } catch (err) {
-      setError(err.response?.data?.detail?.[0]?.msg || 'Failed to log maintenance.');
+      setError(err.response?.data?.detail?.[0]?.msg || 'The Vehicle is already IN SHOP');
     } finally {
       setIsLoading(false);
     }
