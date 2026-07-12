@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from sqlalchemy import select
+from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
 
 from app.models.driver import Driver
@@ -32,11 +32,28 @@ class DriverService:
 
         return driver
 
-    def get_all_drivers(self):
+    def get_all_drivers(
+        self,
+        search: str | None = None,
+        status: DriverStatus | None = None,
+    ):
 
-        return self.db.scalars(
-            select(Driver)
-        ).all()
+        query = select(Driver)
+
+        if search:
+            query = query.where(
+                or_(
+                    Driver.name.ilike(f"%{search}%"),
+                    Driver.license_number.ilike(f"%{search}%"),
+                )
+            )
+
+        if status:
+            query = query.where(
+                Driver.status == status
+            )
+
+        return self.db.scalars(query).all()
 
     def get_driver_by_id(self, driver_id: UUID):
 
@@ -87,7 +104,7 @@ class DriverService:
         self.db.commit()
 
         return {"message": "Driver deleted successfully."}
-    
+
     def get_available_drivers(self):
         return self.db.scalars(
             select(Driver).where(

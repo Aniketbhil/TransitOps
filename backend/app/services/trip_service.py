@@ -39,9 +39,26 @@ class TripService:
 
         return trip
 
-    def get_all_trips(self):
+    def get_all_trips(
+    self,
+    search: str | None = None,
+    status: TripStatus | None = None,
+    ):
 
-        trips = self.db.scalars(select(Trip)).all()
+        query = select(Trip)
+
+        if search:
+            query = query.where(
+                (Trip.source.ilike(f"%{search}%"))
+                | (Trip.destination.ilike(f"%{search}%"))
+            )
+
+        if status:
+            query = query.where(
+                Trip.status == status
+            )
+
+        trips = self.db.scalars(query).all()
 
         result = []
 
@@ -67,7 +84,7 @@ class TripService:
             )
 
         return result
-
+    
     def get_trip_by_id(self, trip_id: UUID):
 
         trip = self.db.get(Trip, trip_id)

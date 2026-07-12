@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from app.core.deps import get_current_user, get_db
@@ -11,6 +11,7 @@ from app.schemas.trip import (
     TripResponse,
 )
 from app.services.trip_service import TripService
+from app.utils.enums import TripStatus
 
 router = APIRouter(
     prefix="/trips",
@@ -34,11 +35,17 @@ def create_trip(
 
 @router.get("", response_model=list[TripListResponse])
 def get_all_trips(
+    search: str | None = Query(default=None),
+    status: TripStatus | None = Query(default=None),
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
     service = TripService(db)
-    return service.get_all_trips()
+
+    return service.get_all_trips(
+        search=search,
+        status=status,
+    )
 
 
 @router.get("/{trip_id}", response_model=TripResponse)

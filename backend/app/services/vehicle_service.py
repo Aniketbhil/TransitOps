@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from sqlalchemy import select
+from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
 
 from app.models.vehicle import Vehicle
@@ -32,11 +32,34 @@ class VehicleService:
 
         return vehicle
 
-    def get_all_vehicles(self):
+    def get_all_vehicles(
+        self,
+        search: str | None = None,
+        status: VehicleStatus | None = None,
+        vehicle_type: str | None = None,
+    ):
 
-        return self.db.scalars(
-            select(Vehicle)
-        ).all()
+        query = select(Vehicle)
+
+        if search:
+            query = query.where(
+                or_(
+                    Vehicle.name.ilike(f"%{search}%"),
+                    Vehicle.registration_number.ilike(f"%{search}%"),
+                )
+            )
+
+        if status:
+            query = query.where(
+                Vehicle.status == status
+            )
+
+        if vehicle_type:
+            query = query.where(
+                Vehicle.vehicle_type.ilike(f"%{vehicle_type}%")
+            )
+
+        return self.db.scalars(query).all()
 
     def get_vehicle_by_id(self, vehicle_id: UUID):
 
@@ -87,7 +110,7 @@ class VehicleService:
         self.db.commit()
 
         return {"message": "Vehicle deleted successfully."}
-    
+
     def get_available_vehicles(self):
         return self.db.scalars(
             select(Vehicle).where(

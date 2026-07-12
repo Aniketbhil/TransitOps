@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from app.core.deps import get_current_user, get_db
@@ -10,6 +10,7 @@ from app.schemas.driver import (
     DriverUpdate,
 )
 from app.services.driver_service import DriverService
+from app.utils.enums import DriverStatus
 
 router = APIRouter(
     prefix="/drivers",
@@ -33,11 +34,18 @@ def create_driver(
 
 @router.get("", response_model=list[DriverResponse])
 def get_all_drivers(
+    search: str | None = Query(default=None),
+    status: DriverStatus | None = Query(default=None),
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
     service = DriverService(db)
-    return service.get_all_drivers()
+
+    return service.get_all_drivers(
+        search=search,
+        status=status,
+    )
+
 
 @router.get("/available", response_model=list[DriverResponse])
 def get_available_drivers(
@@ -89,4 +97,3 @@ def delete_driver(
         return service.delete_driver(driver_id)
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
-    
