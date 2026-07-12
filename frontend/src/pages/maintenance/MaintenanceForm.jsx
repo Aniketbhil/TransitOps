@@ -80,7 +80,7 @@ export default function MaintenanceForm() {
             
             <div className="col-span-1 md:col-span-2">
               <label className="block text-sm font-semibold mb-2 text-[#374151] dark:text-[#D1D5DB]">VEHICLE</label>
-              <select name="vehicle_id" required value={formData.vehicle_id} onChange={handleChange} className="w-full px-4 py-3 rounded-[12px] border border-[#D1D5DB] dark:border-[#334155] bg-white dark:bg-[#1E293B] text-[#111827] dark:text-white focus:outline-none focus:border-[#22C55E]">
+              <select name="vehicle_id" required value={formData.vehicle_id} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border border-[#D1D5DB] dark:border-[#334155] bg-white dark:bg-[#1E293B] text-[#111827] dark:text-white focus:outline-none focus:border-[#22C55E]">
                 <option value="" disabled>Select a vehicle</option>
                 {vehicles.map(v => (
                   <option key={v.id} value={v.id}>{v.name} ({v.registration_number}) - Status: {v.status}</option>
@@ -90,30 +90,30 @@ export default function MaintenanceForm() {
 
             <div>
               <label className="block text-sm font-semibold mb-2 text-[#374151] dark:text-[#D1D5DB]">SERVICE TYPE</label>
-              <input type="text" name="service_type" required value={formData.service_type} onChange={handleChange} placeholder="e.g., Oil Change, Engine Repair" className="w-full px-4 py-3 rounded-[12px] border border-[#D1D5DB] dark:border-[#334155] bg-white dark:bg-[#1E293B] text-[#111827] dark:text-white focus:outline-none focus:border-[#22C55E]" />
+              <input type="text" name="service_type" required value={formData.service_type} onChange={handleChange} placeholder="e.g., Oil Change, Engine Repair" className="w-full px-4 py-3 rounded-xl border border-[#D1D5DB] dark:border-[#334155] bg-white dark:bg-[#1E293B] text-[#111827] dark:text-white focus:outline-none focus:border-[#22C55E]" />
             </div>
 
             <div>
               <label className="block text-sm font-semibold mb-2 text-[#374151] dark:text-[#D1D5DB]">SERVICE DATE</label>
-              <input type="date" name="service_date" required value={formData.service_date} onChange={handleChange} className="w-full px-4 py-3 rounded-[12px] border border-[#D1D5DB] dark:border-[#334155] bg-white dark:bg-[#1E293B] text-[#111827] dark:text-white focus:outline-none focus:border-[#22C55E]" />
+              <input type="date" name="service_date" required value={formData.service_date} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border border-[#D1D5DB] dark:border-[#334155] bg-white dark:bg-[#1E293B] text-[#111827] dark:text-white focus:outline-none focus:border-[#22C55E]" />
             </div>
 
             <div className="col-span-1 md:col-span-2">
               <label className="block text-sm font-semibold mb-2 text-[#374151] dark:text-[#D1D5DB]">COST (INR)</label>
-              <input type="number" name="cost" required min="1" value={formData.cost} onChange={handleChange} placeholder="e.g., 2500" className="w-full px-4 py-3 rounded-[12px] border border-[#D1D5DB] dark:border-[#334155] bg-white dark:bg-[#1E293B] text-[#111827] dark:text-white focus:outline-none focus:border-[#22C55E]" />
+              <input type="number" name="cost" required min="1" value={formData.cost} onChange={handleChange} placeholder="e.g., 2500" className="w-full px-4 py-3 rounded-xl border border-[#D1D5DB] dark:border-[#334155] bg-white dark:bg-[#1E293B] text-[#111827] dark:text-white focus:outline-none focus:border-[#22C55E]" />
             </div>
 
           </div>
 
-          <div className="p-4 mt-2 bg-[#FEF3C7] dark:bg-[#78350F] text-[#D97706] dark:text-[#FCD34D] text-sm rounded-[12px] flex items-start">
+          <div className="p-4 mt-2 bg-[#FEF3C7] dark:bg-[#78350F] text-[#D97706] dark:text-[#FCD34D] text-sm rounded-xl flex items-start">
             Note: <span className='ml-1'>Logging this service will automatically set the vehicle's status to In Shop and remove it from the available dispatch pool.</span>
           </div>
 
           <div className="flex justify-end pt-4 border-t border-[#E5E7EB] dark:border-[#334155] mt-6">
-            <button type="button" onClick={() => navigate('/dashboard/maintenance')} className="mr-3 px-6 py-2.5 rounded-[12px] text-sm font-semibold border border-[#D1D5DB] dark:border-[#334155] text-[#374151] dark:text-white hover:bg-[#F3F4F6] dark:hover:bg-[#273549] transition-colors">
+            <button type="button" onClick={() => navigate('/dashboard/maintenance')} className="mr-3 px-6 py-2.5 rounded-xl text-sm font-semibold border border-[#D1D5DB] dark:border-[#334155] text-[#374151] dark:text-white hover:bg-[#F3F4F6] dark:hover:bg-[#273549] transition-colors">
               Cancel
             </button>
-            <button type="submit" disabled={isLoading} className="px-6 py-2.5 rounded-[12px] text-sm font-semibold bg-[#22C55E] hover:bg-[#16A34A] text-white transition-colors cursor-pointer">
+            <button type="submit" disabled={isLoading} className="px-6 py-2.5 rounded-xl text-sm font-semibold bg-[#22C55E] hover:bg-[#16A34A] text-white transition-colors cursor-pointer">
               {isLoading ? 'Saving...' : 'Save Service Record'}
             </button>
           </div>

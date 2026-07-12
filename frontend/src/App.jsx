@@ -26,6 +26,11 @@ import TripForm from './pages/trips/TripForm';
 import MaintenanceList from './pages/maintenance/MaintenanceList';
 import MaintenanceForm from './pages/maintenance/MaintenanceForm';
 
+// Expense Module Pages
+import ExpenseList from './pages/expenses/ExpenseList';
+import FuelForm from './pages/expenses/FuelForm';
+import ExpenseForm from './pages/expenses/ExpenseForm';
+
 function App() {
   return (
     <ThemeProvider>
@@ -70,6 +75,11 @@ function App() {
                 {/* Maintenance Module */}
                 <Route path="/dashboard/maintenance" element={<MaintenanceList />} />
                 <Route path="/dashboard/maintenance/new" element={<MaintenanceForm />} />
+
+                {/* Expenses Module */}
+                <Route path="/dashboard/expenses" element={<ExpenseList />} />
+                <Route path="/dashboard/expenses/fuel/new" element={<FuelForm />} />
+                <Route path="/dashboard/expenses/other/new" element={<ExpenseForm />} />
 
               </Route>
             </Route>
