@@ -6,8 +6,9 @@ import { ThemeProvider } from './context/ThemeContext';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 
-// Route Guards
+// Route Guards & Layouts
 import ProtectedRoute from './routes/ProtectedRoute';
+import DashboardLayout from './components/layout/DashboardLayout';
 
 function App() {
   return (
@@ -15,25 +16,32 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            {/* Redirect root to login */}
             <Route path="/" element={<Navigate to="/login" replace />} />
             
-            {/* Public Routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
-            {/* Protected Routes */}
+            {/* Protected Routes wrapped in Layout */}
             <Route element={<ProtectedRoute />}>
-              {/* We will add the DashboardLayout here in Part 2 */}
-              <Route path="/dashboard" element={
-                <div className="p-8 text-center dark:text-white">
-                  <h1>Dashboard Skeleton Loaded Successfully!</h1>
-                  <p>User is authenticated.</p>
-                </div>
-              } />
+              <Route element={<DashboardLayout />}>
+                
+                {/* Temporary Dashboard Home */}
+                <Route path="/dashboard" element={
+                  <div className="bg-white dark:bg-[#1E293B] rounded-[18px] p-8 shadow-[0_4px_10px_rgba(0,0,0,0.08)] dark:border dark:border-[#334155]">
+                    <h1 className="text-2xl font-bold text-[#111827] dark:text-white mb-2">Welcome to TransitOps</h1>
+                    <p className="text-[#6B7280] dark:text-[#9CA3AF]">
+                      Select an option from the sidebar to begin managing your fleet operations.
+                    </p>
+                  </div>
+                } />
+
+                {/* Future routes we will build in next chapters */}
+                <Route path="/dashboard/fleet" element={<div>Vehicle Module (Next Chapter)</div>} />
+                <Route path="/dashboard/drivers" element={<div>Driver Module</div>} />
+
+              </Route>
             </Route>
             
-            {/* Catch-all 404 */}
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </BrowserRouter>
