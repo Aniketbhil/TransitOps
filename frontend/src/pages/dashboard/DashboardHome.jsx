@@ -57,7 +57,7 @@ export default function DashboardHome() {
   return (
     <div className="space-y-8">
       
-      {/* 1. Filters Section */}
+      {/* 1. Filters Section
       <div>
         <h3 className="text-xs font-semibold text-[#9CA3AF] uppercase mb-2 tracking-wider">Filters</h3>
         <div className="flex flex-wrap gap-4">
@@ -71,7 +71,7 @@ export default function DashboardHome() {
             <option>Region: All</option>
           </select>
         </div>
-      </div>
+      </div> */}
 
       {/* 2. KPI Cards Row (7 Columns matching wireframe exactly) */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
