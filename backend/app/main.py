@@ -7,6 +7,7 @@ from app.routers.trip import router as trip_router
 from app.routers.maintenance import router as maintenance_router
 from app.routers.fuel_log import router as fuel_log_router
 from app.routers.expense import router as expense_router
+from app.routers.dashboard import router as dashboard_router
 
 app = FastAPI(
     title="TransitOps API",
@@ -28,6 +29,7 @@ app.include_router(trip_router)
 app.include_router(maintenance_router)
 app.include_router(fuel_log_router)
 app.include_router(expense_router)
+app.include_router(dashboard_router)
 
 @app.get("/")
 def root():
