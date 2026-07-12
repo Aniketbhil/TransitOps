@@ -1,31 +1,27 @@
 import api from './api';
 
 export const vehicleApi = {
-  getAll: async () => {
-    const response = await api.get('/vehicles');
+  getAll: async (params = {}) => {
+    const response = await api.get('/vehicles', { params });
     return response.data;
   },
-  
+  // ... keep the rest of the functions unchanged
   getAvailable: async () => {
     const response = await api.get('/vehicles/available');
     return response.data;
   },
-
   getById: async (id) => {
     const response = await api.get(`/vehicles/${id}`);
     return response.data;
   },
-
   create: async (vehicleData) => {
     const response = await api.post('/vehicles', vehicleData);
     return response.data;
   },
-
   update: async (id, vehicleData) => {
     const response = await api.put(`/vehicles/${id}`, vehicleData);
     return response.data;
   },
-
   delete: async (id) => {
     const response = await api.delete(`/vehicles/${id}`);
     return response.data;

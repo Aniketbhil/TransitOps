@@ -11,14 +11,14 @@ export default function Navbar() {
       {/* Search Bar */}
       <div className="flex items-center flex-1">
         <div className="relative w-96">
-          <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          {/* <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Search size={18} className="text-[#9CA3AF]" />
           </span>
           <input
             type="text"
             placeholder="Search..."
             className="w-full pl-10 pr-4 py-2 bg-[#F3F4F6] dark:bg-[#1E293B] border border-transparent focus:bg-white dark:focus:bg-[#111827] focus:border-[#22C55E] dark:focus:border-[#22C55E] rounded-lg text-sm text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-none transition-all"
-          />
+          /> */}
         </div>
       </div>
 

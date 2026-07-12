@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { driverApi } from '../../services/driverApi';
-import { Plus, Edit2, Trash2, Loader2, AlertCircle } from 'lucide-react';
+import { Plus, Edit2, Trash2, Loader2, AlertCircle, Search } from 'lucide-react';
 
 const DriverStatusChip = ({ status }) => {
   const styles = {
@@ -10,14 +10,7 @@ const DriverStatusChip = ({ status }) => {
     OFF_DUTY: "bg-[#F3F4F6] text-[#6B7280] dark:bg-[#374151] dark:text-[#D1D5DB]",
     SUSPENDED: "bg-[#FEE2E2] text-[#DC2626] dark:bg-[#7F1D1D] dark:text-[#FCA5A5]",
   };
-
-  const labels = {
-    AVAILABLE: "Available",
-    ON_TRIP: "On Trip",
-    OFF_DUTY: "Off Duty",
-    SUSPENDED: "Suspended",
-  };
-
+  const labels = { AVAILABLE: "Available", ON_TRIP: "On Trip", OFF_DUTY: "Off Duty", SUSPENDED: "Suspended" };
   return (
     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${styles[status] || styles.OFF_DUTY}`}>
       {labels[status] || status}
@@ -29,9 +22,18 @@ export default function DriverList() {
   const [drivers, setDrivers] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Filters
+  const [search, setSearch] = useState('');
+  const [status, setStatus] = useState('');
+
   const fetchDrivers = async () => {
+    setLoading(true);
     try {
-      const data = await driverApi.getAll();
+      const params = {};
+      if (search) params.search = search;
+      if (status) params.status = status;
+      
+      const data = await driverApi.getAll(params);
       setDrivers(data);
     } catch (error) {
       console.error("Failed to fetch drivers", error);
@@ -41,8 +43,11 @@ export default function DriverList() {
   };
 
   useEffect(() => {
-    fetchDrivers();
-  }, []);
+    const delayDebounceFn = setTimeout(() => {
+      fetchDrivers();
+    }, 300);
+    return () => clearTimeout(delayDebounceFn);
+  }, [search, status]);
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to remove this driver?")) {
@@ -55,10 +60,7 @@ export default function DriverList() {
     }
   };
 
-  // Helper to check if license is expired (simulated UI alert)
-  const isExpired = (expiryDate) => {
-    return new Date(expiryDate) < new Date();
-  };
+  const isExpired = (expiryDate) => new Date(expiryDate) < new Date();
 
   return (
     <div className="space-y-6">
@@ -67,13 +69,33 @@ export default function DriverList() {
           <h1 className="text-2xl font-bold text-[#111827] dark:text-white">Driver Profiles</h1>
           <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF]">Manage driver details, licenses, and safety scores</p>
         </div>
-        <Link
-          to="/dashboard/drivers/new"
-          className="flex items-center gap-2 bg-[#22C55E] hover:bg-[#16A34A] text-white px-4 py-2 rounded-xl transition-colors font-medium text-sm"
-        >
-          <Plus size={16} />
-          Add Driver
+        <Link to="/dashboard/drivers/new" className="flex items-center gap-2 bg-[#22C55E] hover:bg-[#16A34A] text-white px-4 py-2 rounded-xl transition-colors font-medium text-sm">
+          <Plus size={16} /> Add Driver
         </Link>
+      </div>
+
+      {/* Filter Bar */}
+      <div className="flex flex-wrap gap-4 items-center bg-white dark:bg-[#1E293B] p-4 rounded-xl shadow-[0_4px_10px_rgba(0,0,0,0.08)] border border-[#E5E7EB] dark:border-[#334155]">
+        <select value={status} onChange={(e) => setStatus(e.target.value)} className="px-4 py-2 text-sm rounded-xl border border-[#D1D5DB] dark:border-[#334155] bg-white dark:bg-[#111827] text-[#111827] dark:text-white focus:outline-none focus:border-[#22C55E]">
+          <option value="">Status: All</option>
+          <option value="AVAILABLE">Available</option>
+          <option value="ON_TRIP">On Trip</option>
+          <option value="OFF_DUTY">Off Duty</option>
+          <option value="SUSPENDED">Suspended</option>
+        </select>
+
+        <div className="relative flex-1 min-w-50">
+          <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Search size={16} className="text-[#9CA3AF]" />
+          </span>
+          <input 
+            type="text" 
+            placeholder="Search by name or license..." 
+            value={search} 
+            onChange={(e) => setSearch(e.target.value)} 
+            className="w-full pl-10 pr-4 py-2 text-sm rounded-xl border border-[#D1D5DB] dark:border-[#334155] bg-white dark:bg-[#111827] text-[#111827] dark:text-white focus:outline-none focus:border-[#22C55E]"
+          />
+        </div>
       </div>
 
       <div className="bg-white dark:bg-[#1E293B] rounded-[18px] shadow-[0_4px_10px_rgba(0,0,0,0.08)] border border-[#E5E7EB] dark:border-[#334155] overflow-hidden">
@@ -95,15 +117,12 @@ export default function DriverList() {
               {loading ? (
                 <tr>
                   <td colSpan="8" className="px-6 py-12 text-center text-[#6B7280] dark:text-[#9CA3AF]">
-                    <Loader2 className="animate-spin mx-auto mb-2" size={24} />
-                    Loading drivers...
+                    <Loader2 className="animate-spin mx-auto mb-2" size={24} /> Loading drivers...
                   </td>
                 </tr>
               ) : drivers.length === 0 ? (
                 <tr>
-                  <td colSpan="8" className="px-6 py-12 text-center text-[#6B7280] dark:text-[#9CA3AF]">
-                    No drivers found. Add a driver to build your roster.
-                  </td>
+                  <td colSpan="8" className="px-6 py-12 text-center text-[#6B7280] dark:text-[#9CA3AF]">No drivers found.</td>
                 </tr>
               ) : (
                 drivers.map((d) => (
@@ -114,27 +133,17 @@ export default function DriverList() {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         {d.license_expiry}
-                        {isExpired(d.license_expiry) && (
-                          <AlertCircle size={14} className="text-[#EF4444]" title="License Expired" />
-                        )}
+                        {isExpired(d.license_expiry) && <AlertCircle size={14} className="text-[#EF4444]" title="License Expired" />}
                       </div>
                     </td>
                     <td className="px-6 py-4">{d.contact_number}</td>
                     <td className="px-6 py-4">
-                      <span className={d.safety_score < 70 ? 'text-[#DC2626] font-semibold' : 'text-[#15803D] dark:text-[#86EFAC] font-semibold'}>
-                        {d.safety_score}%
-                      </span>
+                      <span className={d.safety_score < 70 ? 'text-[#DC2626] font-semibold' : 'text-[#15803D] dark:text-[#86EFAC] font-semibold'}>{d.safety_score}%</span>
                     </td>
-                    <td className="px-6 py-4">
-                      <DriverStatusChip status={d.status} />
-                    </td>
+                    <td className="px-6 py-4"><DriverStatusChip status={d.status} /></td>
                     <td className="px-6 py-4 text-right space-x-2">
-                      <Link to={`/dashboard/drivers/${d.id}`} className="inline-flex items-center justify-center p-2 text-[#9CA3AF] hover:text-[#22C55E] hover:bg-[#DCFCE7] dark:hover:bg-[#14532D] rounded-full transition-colors">
-                        <Edit2 size={16} />
-                      </Link>
-                      <button onClick={() => handleDelete(d.id)} className="inline-flex items-center justify-center p-2 text-[#9CA3AF] hover:text-[#EF4444] hover:bg-[#FEE2E2] dark:hover:bg-[#7F1D1D] rounded-full transition-colors">
-                        <Trash2 size={16} />
-                      </button>
+                      <Link to={`/dashboard/drivers/${d.id}`} className="inline-flex items-center justify-center p-2 text-[#9CA3AF] hover:text-[#22C55E] hover:bg-[#DCFCE7] dark:hover:bg-[#14532D] rounded-full transition-colors"><Edit2 size={16} /></Link>
+                      <button onClick={() => handleDelete(d.id)} className="inline-flex items-center justify-center p-2 text-[#9CA3AF] hover:text-[#EF4444] hover:bg-[#FEE2E2] dark:hover:bg-[#7F1D1D] rounded-full transition-colors"><Trash2 size={16} /></button>
                     </td>
                   </tr>
                 ))
