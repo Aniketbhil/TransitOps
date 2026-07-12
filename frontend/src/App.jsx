@@ -22,6 +22,10 @@ import VehicleForm from './pages/vehicles/VehicleForm';
 import TripList from './pages/trips/TripList';
 import TripForm from './pages/trips/TripForm';
 
+// Maintenance Module Pages
+import MaintenanceList from './pages/maintenance/MaintenanceList';
+import MaintenanceForm from './pages/maintenance/MaintenanceForm';
+
 function App() {
   return (
     <ThemeProvider>
@@ -63,8 +67,14 @@ function App() {
                 <Route path="/dashboard/trips" element={<TripList />} />
                 <Route path="/dashboard/trips/new" element={<TripForm />} />
 
+                {/* Maintenance Module */}
+                <Route path="/dashboard/maintenance" element={<MaintenanceList />} />
+                <Route path="/dashboard/maintenance/new" element={<MaintenanceForm />} />
+
               </Route>
             </Route>
+
+            
             
             {/* Catch-all 404 */}
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
