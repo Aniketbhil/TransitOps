@@ -37,6 +37,9 @@ import DashboardHome from './pages/dashboard/DashboardHome';
 // Analytics Module Page
 import AnalyticsHome from './pages/analytics/AnalyticsHome';
 
+// Settings Module Page
+import Settings from './pages/settings/Settings';
+
 function App() {
   return (
     <ThemeProvider>
@@ -82,6 +85,9 @@ function App() {
 
                 {/* Analytics Module */}
                 <Route path="/dashboard/analytics" element={<AnalyticsHome />} />
+
+                {/* Settings Module */}
+                <Route path="/dashboard/settings" element={<Settings />} />
 
               </Route>
             </Route>
