@@ -28,3 +28,14 @@ class TripStatus(str, Enum):
     DISPATCHED = "DISPATCHED"
     COMPLETED = "COMPLETED"
     CANCELLED = "CANCELLED"
+
+
+class MaintenanceStatus(str, Enum):
+    ACTIVE = "ACTIVE"
+    COMPLETED = "COMPLETED"
+
+
+class ExpenseType(str, Enum):
+    TOLL = "TOLL"
+    MAINTENANCE = "MAINTENANCE"
+    OTHER = "OTHER"
