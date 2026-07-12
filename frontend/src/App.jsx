@@ -31,6 +31,9 @@ import ExpenseList from './pages/expenses/ExpenseList';
 import FuelForm from './pages/expenses/FuelForm';
 import ExpenseForm from './pages/expenses/ExpenseForm';
 
+// Dashboard Page
+import DashboardHome from './pages/dashboard/DashboardHome';
+
 function App() {
   return (
     <ThemeProvider>
@@ -49,14 +52,7 @@ function App() {
               <Route element={<DashboardLayout />}>
                 
                 {/* Dashboard Home */}
-                <Route path="/dashboard" element={
-                  <div className="bg-white dark:bg-[#1E293B] rounded-[18px] p-8 shadow-[0_4px_10px_rgba(0,0,0,0.08)] dark:border dark:border-[#334155]">
-                    <h1 className="text-2xl font-bold text-[#111827] dark:text-white mb-2">Welcome to TransitOps</h1>
-                    <p className="text-[#6B7280] dark:text-[#9CA3AF]">
-                      Select an option from the sidebar to begin managing your fleet operations.
-                    </p>
-                  </div>
-                } />
+                <Route path="/dashboard" element={<DashboardHome />} />
 
                 {/* Fleet / Vehicle Module */}
                 <Route path="/dashboard/fleet" element={<VehicleList />} />
