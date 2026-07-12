@@ -34,6 +34,9 @@ import ExpenseForm from './pages/expenses/ExpenseForm';
 // Dashboard Page
 import DashboardHome from './pages/dashboard/DashboardHome';
 
+// Analytics Module Page
+import AnalyticsHome from './pages/analytics/AnalyticsHome';
+
 function App() {
   return (
     <ThemeProvider>
@@ -76,6 +79,9 @@ function App() {
                 <Route path="/dashboard/expenses" element={<ExpenseList />} />
                 <Route path="/dashboard/expenses/fuel/new" element={<FuelForm />} />
                 <Route path="/dashboard/expenses/other/new" element={<ExpenseForm />} />
+
+                {/* Analytics Module */}
+                <Route path="/dashboard/analytics" element={<AnalyticsHome />} />
 
               </Route>
             </Route>
