@@ -8,7 +8,7 @@ from app.routers.maintenance import router as maintenance_router
 from app.routers.fuel_log import router as fuel_log_router
 from app.routers.expense import router as expense_router
 from app.routers.dashboard import router as dashboard_router
-
+from app.routers.system_settings import router as settings_router
 app = FastAPI(
     title="TransitOps API",
     version="1.0.0",
@@ -30,6 +30,7 @@ app.include_router(maintenance_router)
 app.include_router(fuel_log_router)
 app.include_router(expense_router)
 app.include_router(dashboard_router)
+app.include_router(settings_router)
 
 @app.get("/")
 def root():
