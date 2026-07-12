@@ -72,9 +72,7 @@ function App() {
                 <Route path="/dashboard/trips" element={<TripList />} />
                 <Route path="/dashboard/trips/new" element={<TripForm />} />
 
-                {/* Maintenance Module */}
-                <Route path="/dashboard/maintenance" element={<MaintenanceList />} />
-                <Route path="/dashboard/maintenance/new" element={<MaintenanceForm />} />
+                
 
                 {/* Expenses Module */}
                 <Route path="/dashboard/expenses" element={<ExpenseList />} />
