@@ -106,7 +106,7 @@ export default function Register() {
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl border border-[#D1D5DB] dark:border-[#334155] bg-white dark:bg-[#1E293B] focus:outline-none focus:border-[#22C55E] dark:focus:border-[#22C55E]"
               >
-                <option value="ADMIN">Admin</option>
+                {/* <option value="ADMIN">Admin</option> */}
                 <option value="FLEET_MANAGER">Fleet Manager</option>
                 <option value="DISPATCHER">Dispatcher</option>
                 <option value="SAFETY_OFFICER">Safety Officer</option>

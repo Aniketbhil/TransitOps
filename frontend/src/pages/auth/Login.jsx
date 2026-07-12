@@ -36,7 +36,11 @@ export default function Login() {
           </div>
           <h2 className="text-4xl font-bold text-white mb-4">Smart Transport Operations Platform</h2>
           <p className="text-[#14532D] text-lg max-w-md">
-            One login, four roles: Fleet Manager, Dispatcher, Safety Officer, Financial Analyst.
+            One login, four roles: <br />
+             Fleet Manager <br />
+             Dispatcher <br />
+             Safety Officer <br />
+            Financial Analyst <br />
           </p>
         </div>
       </div>
